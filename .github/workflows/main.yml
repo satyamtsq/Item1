@@ -9,13 +9,14 @@ jobs:
    steps:
      - name: Call REST API
        run: |
+        $BatchscheduleID = '${{ vars.BATCHSCHEDULEID }}'
          $params = @{
            Uri = 'http://3.6.189.154:8080/invokeFromPipeline'
            Method = 'POST'
            Body = @{
              Usernameofbreez = 'sopanna.musalappa@tesquirel.com'
              Passwordofbreez = 'Arun@123'
-             BatchscheduleID = BS01389
+             BatchscheduleID = $BatchscheduleID
              IpAddress = 'http://3.6.189.154:8080/'
            }
          }
