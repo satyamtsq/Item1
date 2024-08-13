@@ -1,0 +1,22 @@
+name: GitHub Actions Pipelinee
+on:
+ push:
+   branches:
+     - main
+jobs:
+ invoke_api:
+   runs-on: windows-latest
+   steps:
+     - name: Call REST API
+       run: |
+         $params = @{
+           Uri = 'http://3.6.189.154:8080/invokeFromPipeline'
+           Method = 'POST'
+           Body = @{
+             Usernameofbreez = 'sopanna.musalappa@tesquirel.com'
+             Passwordofbreez = 'Arun@123'
+             BatchscheduleID = BS01389
+             IpAddress = 'http://3.6.189.154:8080/'
+           }
+         }
+         Invoke-RestMethod @params
