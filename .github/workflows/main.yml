@@ -12,7 +12,7 @@ jobs:
        run: |
         $BatchscheduleID = '${{ vars.BATCHSCHEDULEID }}'
          $params = @{
-           Uri = 'http://172.31.19.121:8080/invokeFromPipeline'
+           Uri = 'http://3.6.189.154:8080/test-automation-via-cicd'
            Method = 'POST'
            Body = @{
              Usernameofbreez = 'qa@chartrequest.com'
