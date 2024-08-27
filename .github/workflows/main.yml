@@ -7,6 +7,7 @@ on:
 jobs:
   invoke_api:
     runs-on: windows-latest
+    needs: deploy
     steps:
       - name: Call REST API
         run: |
@@ -19,7 +20,6 @@ jobs:
               Passwordofbreez = 'tsq@123'
               BatchscheduleID = $BatchscheduleID
               IpAddress = 'http://172.31.19.121:8080/'
-            } | ConvertTo-Json
-            ContentType = 'application/json'
+            }
           }
           Invoke-RestMethod @params
