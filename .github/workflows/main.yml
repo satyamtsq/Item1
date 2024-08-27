@@ -1,24 +1,17 @@
-name: GitHub Actions Pipelinee
-# gopal2
-on:
- push:
-   branches:
-     - main
-jobs:
- invoke_api:
-   runs-on: windows-latest
-   steps:
-     - name: Call REST API
-       run: |
-        $BatchscheduleID = '${{ vars.BATCHSCHEDULEID }}'
-         $params = @{
-           Uri = 'http://172.31.19.121:8080/invokeFromPipeline'
-           Method = 'POST'
+invoke_api:
+        runs-on: ubuntu-latest
+        needs: deploy
+        steps:
+        - name: Call REST API
+          run: |
+           $BatchscheduleID = '${{ vars.BATCHSCHEDULEID }}'
+           $params = @{
+           Uri = 'http://172.31.19.121:8080/test-automation-via-cicd'
+           Method = 'POST
            Body = @{
-             Usernameofbreez = 'qa@chartrequest.com'
-             Passwordofbreez = 'tsq@123'
-             BatchscheduleID = $BatchscheduleID
-             IpAddress = 'http://172.31.19.121:8080/'
+           Usernameofbreez = 'qa@chartrequest.com'
+           Passwordofbreez = 'tsq@123'
+           BatchscheduleID = $BatchscheduleID
+           IpAddress = 'http://172.31.19.121:8080/'
+            }
            }
-         }
-         Invoke-RestMethod @params
