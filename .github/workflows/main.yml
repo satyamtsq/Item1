@@ -15,3 +15,4 @@ invoke_api:
            IpAddress = 'http://172.31.19.121:8080/'
             }
            }
+		   Invoke-RestMethod @params
