@@ -13,7 +13,7 @@ jobs:
           $BatchscheduleID = '${{ secrets.BATCHSCHEDULEID }}'
           $params = @{
             Uri = 'http://172.31.19.121:8080/test-automation-via-cicd'
-            Method = 'POST
+            Method = 'POST'
             Body = @{
               Usernameofbreez = 'qa@chartrequest.com'
               Passwordofbreez = 'tsq@123'
