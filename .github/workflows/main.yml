@@ -6,8 +6,7 @@ on:
 
 jobs:
   invoke_api:
-    runs-on: windows-latest
-    needs: deploy
+    runs-on: ubuntu-latest
     steps:
       - name: Call REST API
         run: |
@@ -24,4 +23,3 @@ jobs:
             ContentType = 'application/json'
           }
           Invoke-RestMethod @params
-
