@@ -10,9 +10,11 @@ jobs:
     steps:
       - name: Install OpenVPN
         run: |
-          choco install openvpn
-          Import-Module $env:ChocolateyInstall\helpers\chocolateyProfile.psm1
-          where openvpn
+          run: |
+             choco install openvpn
+             Import-Module $env:ChocolateyInstall\helpers\chocolateyProfile.psm1
+             $openvpnPath = (Get-Package -Name openvpn).InstallPath
+             Write-Host "OpenVPN installed at: $openvpnPath"
       - name: Set up VPN connection
         run: |
               Start-Process -FilePath "C:\Program Files\OpenVPN Connect\OpenVPNConnect.exe" -ArgumentList @("--config", "F:\OpenVPN\pfSense-udp-1194-config.ovpn", "--daemon")
