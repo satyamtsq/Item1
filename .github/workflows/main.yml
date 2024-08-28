@@ -10,7 +10,6 @@ jobs:
     steps:
       - name: Install OpenVPN
         run: |
-          run: |
              choco install openvpn
              Import-Module $env:ChocolateyInstall\helpers\chocolateyProfile.psm1
              $openvpnPath = (Get-Package -Name openvpn).InstallPath
