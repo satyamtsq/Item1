@@ -12,7 +12,7 @@ jobs:
         run: |
              choco install openvpn
              Import-Module $env:ChocolateyInstall\helpers\chocolateyProfile.psm1
-             $openvpnPath = (Get-Package -Name openvpn).InstallPath
+             $openvpnPath = (Get-ItemProperty HKLM:\Software\Chocolatey\apps\openvpn).InstallLocation
              Write-Host "OpenVPN installed at: $openvpnPath"
       - name: Set up VPN connection
         run: |
