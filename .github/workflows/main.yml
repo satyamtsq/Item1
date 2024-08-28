@@ -11,7 +11,7 @@ jobs:
       - name: Install OpenVPN
         run: |
           choco install openvpn
-          refreshenv
+          Import-Module $env:ChocolateyInstall\helpers\chocolateyProfile.psm1
       - name: Set up VPN connection
         run: |
           openvpn --config F:\OpenVPN\pfSense-udp-1194-config.ovpnn --daemon
