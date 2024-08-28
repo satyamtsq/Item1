@@ -10,9 +10,9 @@ jobs:
     steps:
       - name: Install OpenVPN
         run: |
-             choco install openvpn
-             $openvpnPath = (choco info openvpn --verbose).Path
-             Write-Host "OpenVPN installed at: $openvpnPath"
+              choco install openvpn
+              $openvpnPath = (Get-Item (Get-Package -Name openvpn).InstallLocation).Parent.FullName
+              Write-Host "OpenVPN installed at: $openvpnPath"
       - name: Set up VPN connection
         run: |
               Start-Process -FilePath "C:\Program Files\OpenVPN Connect\OpenVPNConnect.exe" -ArgumentList @("--config", "F:\OpenVPN\pfSense-udp-1194-config.ovpn", "--daemon")
