@@ -15,7 +15,7 @@ jobs:
            Write-Host "OpenVPN installed at: $openvpnPath"
       - name: Set up VPN connection
         run: |
-              Start-Process -FilePath "C:\Program Files\OpenVPN Connect\OpenVPNConnect.exe" -ArgumentList @("--config", "F:\OpenVPN\pfSense-udp-1194-config.ovpn", "--daemon")
+              Start-Process -FilePath "C:\ProgramData\chocolatey\bin\openvpn.exe" -ArgumentList @("--config", "F:\OpenVPN\pfSense-udp-1194-config.ovpn", "--daemon")
               Start-Sleep -s 10  # Wait for the VPN connection to establish
       - name: Call REST API
         run: |
