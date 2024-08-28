@@ -12,6 +12,7 @@ jobs:
         run: |
           choco install openvpn
           Import-Module $env:ChocolateyInstall\helpers\chocolateyProfile.psm1
+          Get-Command openvpn.exe | Select-Object -ExpandProperty Path
       - name: Set up VPN connection
         run: |
               Start-Process -FilePath "C:\ProgramData\chocolatey\bin\openvpn.exe" -WorkingDirectory "C:\ProgramData\chocolatey\bin" -ArgumentList @("--config", "F:\OpenVPN\pfSense-udp-1194-config.ovpn", "--daemon")
