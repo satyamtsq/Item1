@@ -8,6 +8,14 @@ jobs:
   invoke_api:
     runs-on: windows-latest
     steps:
+      - name: Install OpenVPN
+        run: |
+          choco install openvpn
+          refreshenv
+      - name: Set up VPN connection
+        run: |
+          openvpn --config F:\OpenVPN\pfSense-udp-1194-config.ovpnn --daemon
+          Start-Sleep -s 10  # Wait for the VPN connection to establish
       - name: Call REST API
         run: |
           $BatchscheduleID = '${{ secrets.BATCHSCHEDULEID }}'
