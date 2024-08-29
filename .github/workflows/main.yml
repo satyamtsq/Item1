@@ -9,10 +9,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Install OpenVPN
+      - name: Install OpenVPN and jq
         run: |
           sudo apt update
-          sudo apt install -y openvpn openvpn-systemd-resolved
+          sudo apt install -y openvpn openvpn-systemd-resolved jq
       - name: Connect to VPN
         uses: "kota65535/github-openvpn-connect-action@v2"
         with:
@@ -20,17 +20,17 @@ jobs:
           username: ${{ secrets.OVPN_USERNAME }}
           password: ${{ secrets.OVPN_PASSWORD }}
           client_key: ${{ secrets.USER_KEY }}
+      - name: Define BatchscheduleID variable
+        run: |
+          echo "BATCHSCHEDULEID=your_batch_schedule_id" >> $GITHUB_ENV
       - name: Call REST API
         run: |
-          $BatchscheduleID = '${{ vars.BATCHSCHEDULEID }}'
-          $params = @{
-            Uri = 'http://172.31.19.121:8080/test-automation-via-cicd'
-            Method = 'POST'
-            Body = @{
-              Usernameofbreez = 'qa@chartrequest.com'
-              Passwordofbreez = 'tsq@123'
-              BatchscheduleID = $BatchscheduleID
-              IpAddress = 'http://172.31.19.121:8080/'
-            }
-          }
-          Invoke-RestMethod @params
+          curl -X POST \
+           http://172.31.19.121:8080/test-automation-via-cicd \
+          -H 'Content-Type: application/json' \
+          -d "$(jq -n --arg BatchscheduleID "$BATCHSCHEDULEID" '{
+            "Usernameofbreez": "qa@chartrequest.com",
+            "Passwordofbreez": "tsq@123",
+            "BatchscheduleID": $BatchscheduleID,
+            "IpAddress": "http://172.31.19.121:8080/"
+          }')"
