@@ -1,4 +1,4 @@
-name: GitHub Actions Pipeline
+		  name: GitHub Actions Pipeline
 on:
   push:
     branches:
@@ -13,8 +13,12 @@ jobs:
         run: |
           choco install openvpn
       - name: Connect to VPN
-        run: |
-           Start-Process -FilePath "openvpn" -ArgumentList "--config", ".github/workflows/pfSense-udp-1194-config.ovpn", "--daemon", "--log", "openvpn.log", "--writepid", "openvpn.pid", "--username", "${{ secrets.OVPN_USERNAME }}", "--password", "${{ secrets.OVPN_PASSWORD }}" -Verb RunAs
+        uses: "kota65535/github-openvpn-connect-action@v2"
+        with:
+          config_file: .github/workflows/pfSense-udp-1194-config.ovpn
+          username: ${{ secrets.OVPN_USERNAME }}
+          password: ${{ secrets.OVPN_PASSWORD }}
+          client_key: ${{ secrets.USER_KEY }}
       - name: Call REST API
         run: |
           $BatchscheduleID = '${{ vars.BATCHSCHEDULEID }}'
