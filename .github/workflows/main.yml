@@ -3,24 +3,25 @@ on:
   push:
     branches:
       - main
-
 jobs:
   invoke_api:
     runs-on: windows-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v3
       - name: Install OpenVPN
         run: |
-              pwd
-              choco install openvpn
-              Import-Module $env:ChocolateyInstall\helpers\chocolateyProfile.psm1
-              where openvpn
-      - name: Set up VPN connection
-        run: |
-              Start-Process -FilePath "/home/runner/work/_temp/openvpn.exe" -ArgumentList @("--config", "F:\OpenVPN\pfSense-udp-1194-config.ovpn", "--daemon")
-              Start-Sleep -s 10  # Wait for the VPN connection to establish
+          choco install openvpn
+      - name: Connect to VPN
+        uses: "kota65535/github-openvpn-connect-action@v2"
+        with:
+          config_file: .github/workflows/client.ovpn
+          username: ${{ secrets.OVPN_USERNAME }}
+          password: ${{ secrets.OVPN_PASSWORD }}
+          client_key: ${{ secrets.USER_KEY }}
       - name: Call REST API
         run: |
-          $BatchscheduleID = '${{ secrets.BATCHSCHEDULEID }}'
+          $BatchscheduleID = '${{ vars.BATCHSCHEDULEID }}'
           $params = @{
             Uri = 'http://172.31.19.121:8080/test-automation-via-cicd'
             Method = 'POST'
@@ -31,3 +32,4 @@ jobs:
               IpAddress = 'http://172.31.19.121:8080/'
             }
           }
+          Invoke-RestMethod @params
