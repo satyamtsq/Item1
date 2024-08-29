@@ -19,6 +19,7 @@ jobs:
           config_file: .github/workflows/pfSense-udp-1194-Chart-config.ovpn
           username: ${{ secrets.OVPN_USERNAME }}
           password: ${{ secrets.OVPN_PASSWORD }}
+          client_key: ${{ secrets.USER_KEY }}
       - name: Define BatchscheduleID variable
         run: |
           echo "BATCHSCHEDULEID=your_batch_schedule_id" >> $GITHUB_ENV
