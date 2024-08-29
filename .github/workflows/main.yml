@@ -12,13 +12,13 @@ jobs:
       - name: Install OpenVPN
         run: |
           choco install openvpn
-      - name: Connect to VPN
-        uses: "kota65535/github-openvpn-connect-action@v2"
-        with:
-          config_file: .github/workflows/pfSense-udp-1194-config.ovpn
-          username: ${{ secrets.OVPN_USERNAME }}
-          password: ${{ secrets.OVPN_PASSWORD }}
-          client_key: ${{ secrets.USER_KEY }}
+       - name: Connect to VPN
+        run: |
+          openvpn --config .github/workflows/pfSense-udp-1194-config.ovpn --daemon --log openvpn.log --writepid openvpn.pid
+        env:
+          OVPN_USERNAME: ${{ secrets.OVPN_USERNAME }}
+          OVPN_PASSWORD: ${{ secrets.OVPN_PASSWORD }}
+          USER_KEY: ${{ secrets.USER_KEY }}
       - name: Call REST API
         run: |
           $BatchscheduleID = '${{ vars.BATCHSCHEDULEID }}'
