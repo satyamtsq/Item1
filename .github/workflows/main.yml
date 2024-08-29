@@ -10,6 +10,7 @@ jobs:
     steps:
       - name: Install OpenVPN
         run: |
+              pwd
               choco install openvpn
               Import-Module $env:ChocolateyInstall\helpers\chocolateyProfile.psm1
               where openvpn
