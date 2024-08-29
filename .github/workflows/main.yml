@@ -29,8 +29,8 @@ jobs:
            http://172.31.19.121:8080/test-automation-via-cicd \
           -H 'Content-Type: application/json' \
           -d "$(jq -n --arg BatchscheduleID "$BATCHSCHEDULEID" --arg Usernameofbreez "qa@chartrequest.com" '{
-            "Usernameofbreez": $Usernameofbreez,
-            "Passwordofbreez": "tsq@123",
-            "BatchscheduleID": $BatchscheduleID,
-            "IpAddress": "http://172.31.19.121:8080/"
+             Usernameofbreez: $Usernameofbreez,
+             Passwordofbreez: "tsq@123",
+             BatchscheduleID: $BatchscheduleID,
+             IpAddress: "http://172.31.19.121:8080/"
           }')"
