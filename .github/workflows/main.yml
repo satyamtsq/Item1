@@ -25,4 +25,5 @@ jobs:
           echo "BATCHSCHEDULEID=your_batch_schedule_id" >> $GITHUB_ENV
       - name: Call REST API
         run: |
-          curl -X POST  --location 'http://172.31.19.121:8080/test-automation-via-cicd' -d "Usernameofbreez=qa@chartrequest.com&Passwordofbreez=tsq@123&BatchscheduleID=${{ vars.BATCHSCHEDULEID }}&IpAddress=http://172.31.19.121:8080/"
+         response=$(curl -X POST  --location 'http://172.31.19.121:8080/test-automation-via-cicd' -d "Usernameofbreez=qa@chartrequest.com&Passwordofbreez=tsq@123&BatchscheduleID=${{ vars.BATCHSCHEDULEID }}&IpAddress=http://172.31.19.121:8080/")
+         echo "API Response: $response"
